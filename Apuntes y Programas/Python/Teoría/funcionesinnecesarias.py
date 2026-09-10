@@ -60,7 +60,19 @@ listbutsorted = sorted(list) # 0,1,2,3,4,6,9
 #Ambos hacen la misma función pero find solo sirve para strings, index es capaz de devolver el indice de un elemento equivalente en la lista/tupla que le insertes dentro de los parentesis.
 
 stringparafind = ("hola mundo")
-valorparaencontrar = stringparafind.find(mundo) #5, a partir del 5 empieza el primer caracter de mundo
+valorparaencontrar = stringparafind.find("mundo") #5, a partir del 6 empieza el primer caracter de mundo
 
 listarandom = [1,2,3,4,5,6]
 valorenindice = listarandom.index(4) # 3
+
+# 7.) lower()
+
+#Lower puede convertir todos los caracteres de una string en minuscula, es muy util cuando el algoritmo te pide
+# ignorar las mayusculas, para obtener el texto en crudo.
+
+
+string_con_mayusculas = "Desgraciados, WowoWowoW"
+
+string_convertida = string_con_mayusculas.lower()
+
+print(string_convertida) # devolvera el texto todo en minuscula.
