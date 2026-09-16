@@ -76,3 +76,24 @@ string_con_mayusculas = "Desgraciados, WowoWowoW"
 string_convertida = string_con_mayusculas.lower()
 
 print(string_convertida) # devolvera el texto todo en minuscula.
+
+
+# 8.) min y max
+
+# Ambas pueden ser usadas para devolver menor/mayor elemento en una lista. Pero ojo, no solo afecta a numeros.
+# Tambien puede ordenar cadenas de texto alfabeticamente.
+
+lista_con_palabras = ["avion", "casa", "azul"]
+lista_con_numeros_ejemplo = [1, 2, 4, 9, 7]
+
+print(min(lista_con_palabras))
+print(min(lista_con_numeros_ejemplo))
+
+# 9.) split()
+
+# Split sirve para crear una lista, cuyos elementos son strings hijos de una string padre. Split corta cada palabra
+# y la añade a la lista.
+
+texto_para_splittear = "Hola como estas"
+texto_spliteado = texto_para_splittear.split()
+print(texto_spliteado)
