@@ -30,31 +30,34 @@ public class App extends Canvas implements Runnable {
 
         File carpeta = new File("images");
 
+        // hacemos esto solo para obtener el tamaño de la carpeta
         File[] archivos = carpeta.listFiles();
+
+        // necesitamos un contador
+        int contador = 1;
+
+        // string auxiliar
+
+        String imagen_importada;
 
         if (archivos != null) {
 
-            for (File archivo : archivos) {
-
-                String nombre = archivo.getName().toLowerCase();
-
-                if (nombre.endsWith(".png") ||
-                    nombre.endsWith(".jpg") ||
-                    nombre.endsWith(".jpeg")) {
-
-                    try {
-
-                        BufferedImage imagen = ImageIO.read(archivo);
-
-                        if (imagen != null) {
-                            imagenes.add(imagen);
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            while (contador != archivos.length - 1){
+                imagen_importada = String.valueOf(contador) + ".png";
+                try {
+                BufferedImage imagen = ImageIO.read(new File(carpeta, imagen_importada));
+                imagenes.add(imagen);
                 }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                contador++;
+                imagen_importada = "";
+                
+
+
             }
+
         }
 
         imagen = imagenes.get(indice);

@@ -1,18 +1,10 @@
-## Getting Started
+## Programa animador
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Este programa es capaz de mostrar una secuencia de imagenes de forma fluida y circular, como si se tratase de un gif.
 
-## Folder Structure
+Para que funcione, solo sustituya las imagenes en la carpeta "images" que se
+encuentra en src.
 
-The workspace contains two folders by default, where:
+Las imagenes introducidas tienen que ir numeradas, el programa las ejecutara en tal orden numerico, la primera imagen que el programa ejecutará será la que tenga de nombre "1".
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Las imagenes deben ser PNG.
