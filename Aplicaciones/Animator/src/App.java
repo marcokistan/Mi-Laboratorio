@@ -42,7 +42,7 @@ public class App extends Canvas implements Runnable {
 
         if (archivos != null) {
 
-            while (contador != archivos.length - 1){
+            while (contador != archivos.length + 1){
                 imagen_importada = String.valueOf(contador) + ".png";
                 try {
                 BufferedImage imagen = ImageIO.read(new File(carpeta, imagen_importada));
@@ -84,30 +84,30 @@ public class App extends Canvas implements Runnable {
         while (true){
             if (indice != imagenes.size() - 1){
             indice = indice + 1;
-        }
-        else{
-            indice = 0;
-        }
+            }
+            else{
+                indice = 0;
+            }
         
-        imagen = imagenes.get(indice);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            imagen = imagenes.get(indice);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        
-        // Obtenemos Graphics para dibujar
-        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+            
+            // Obtenemos Graphics para dibujar
+            Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
-        // Dibujamos la imagen
-        g.drawImage(imagen, 0, 0, 400, 300, null);
+            // Dibujamos la imagen
+            g.drawImage(imagen, 0, 0, 400, 300, null);
 
-        // Liberamos Graphics
-        g.dispose();
+            // Liberamos Graphics
+            g.dispose();
 
-        // Mostramos el buffer que acabamos de preparar
-        buffer.show();
+            // Mostramos el buffer que acabamos de preparar
+            buffer.show();
 
 
         }
