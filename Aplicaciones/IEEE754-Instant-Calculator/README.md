@@ -1,5 +1,9 @@
 # IEEE754 Instant Calculator
 
-This program allows you to plug any decimal number and get the IEE754 representation.
+Este programa te permite obtener la representación IEEE-754 (32 bits) de cualquier numero decimal/hexadecimal y 
+la operación inversa.
 
-Right now, this program does not allow to do the inverse operation.
+Tiene en cuenta los casos matemáticamente especiales.
+
+Creado por marcokistan, 2026
+Licencia MIT (Puedes redistribuir y editar el programa, pero me tienes que acreditar)
