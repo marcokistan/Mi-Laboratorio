@@ -1,6 +1,8 @@
 import struct
 
 running = True
+hex_list = ["0", "1", "2,", "3", "4", "5", "6", "7", "8", "9",
+            "a", "A", "b", "B", "c", "C", "d", "D", "e", "E", "f", "F"]
 
 
 def binaryconversion(entry):
@@ -50,13 +52,19 @@ def decimalconversion(entry):
 
 
 def program():
-    global running
+    global running, hex_list
     print("---CALCULADORA IEEE-754, ESCRIBA /h PARA OBTENER LA LISTA DE COMANDOS---\n")
     while running == True:
         try:
             command = input("IEEE-754 CALC: ")
             if command == "/h" or command == "/H":
-                print("LISTA DE COMANDOS:\n/P : CONVIERTE UN NUMERO A REPRESENTACIÓN IEEE 754\n/D : CONVIERTE UN NUMERO EN REPRESENTACIÓN IEEE 754 A DECIMAL\n /H : OBTIENE LA LISTA DE COMANDOS DE LA APLICACIÓN\n\n Software creado por marcokistan 2026")
+                print("LISTA DE COMANDOS:\n"
+                "/P : CONVIERTE UN NUMERO A REPRESENTACIÓN IEEE 754\n"
+                "/D : CONVIERTE UN NUMERO EN REPRESENTACIÓN IEEE 754 A DECIMAL\n"
+                "/H : OBTIENE LA LISTA DE COMANDOS DE LA APLICACIÓN\n"
+                "/Q : CIERRA EL PROGRAMA\n\n" 
+                "El programa permite representaciones binarias y hexadecimales.\n"
+                "Software creado por marcokistan 2026")
             if command == "/p" or command == "/P":
                 floating_number = ""
                 entry = input("Introduzca un numero decimal (Añada un punto o una coma para\nindicar cuando termina la parte entera): ")
@@ -67,31 +75,27 @@ def program():
                         floating_number += caracter
                 floating_number = float(floating_number)
                 binario = binaryconversion(floating_number)
-                print(f"RESULATADO EN FORMATO IEE-754 (Bin): {binario}\nRESULATADO EN FORMATO IEE-754 (Hex): {hex(int(binario, 2))}")
+                print(f"RESULATADO EN FORMATO IEE-754 (Bin): {binario}\nRESULATADO EN FORMATO IEE-754 (Hex): {hex(int(binario, 2))[2:]}")
             if command == "/d" or command == "/D":
                 entry = input("Introduzca un numero con representacion IEEE 754: ")
-                if len(entry) != 32:
-                    raise ValueError
-                for caracter in entry:
-                    if caracter != "1" and caracter != "0":
+                # caso hexadecimal
+                if len(entry) == 8:
+                    for caracter in entry:
+                        if caracter not in hex_list:
+                            raise ValueError
+                    entry = f"{int(entry, 16):032b}"
+                else:
+                    if len(entry) != 32:
                         raise ValueError
+                    for caracter in entry:
+                        if caracter != "1" and caracter != "0":
+                            raise ValueError
                 decimal = decimalconversion(entry)
                 print(decimal)
-
-                
-                                
-
-
-
-
-
-
-
-
-            
+            if command == "/q" or command == "/Q":
+                running = False
         except:
             print("Entrada no valida")
-
 
 program()
 
