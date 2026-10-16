@@ -1,9 +1,6 @@
 import struct
 
 running = True
-hex_list = ["0", "1", "2,", "3", "4", "5", "6", "7", "8", "9",
-            "a", "A", "b", "B", "c", "C", "d", "D", "e", "E", "f", "F"]
-
 
 def binaryconversion(entry):
     simple_precision = ""
@@ -24,35 +21,52 @@ def decimalconversion(entry):
     # obtener exponente
     contador_pos = 8
     cadena_raw_exponente = entry[1:9] # bits del 1 al 8
-    potencias_a_multiplicar = []
+    potencias_a_multiplicar_exponente = []
     for bit in cadena_raw_exponente:
         contador_pos -= 1
         if bit == "1":
-            potencias_a_multiplicar.append(contador_pos)
-    exponente_sin_sesgo = 0
-    for potencia in potencias_a_multiplicar:
-        potencia = 2 ** potencia
-        exponente_sin_sesgo += potencia
-    exponente = exponente_sin_sesgo - 127
+            potencias_a_multiplicar_exponente.append(contador_pos)
+    if potencias_a_multiplicar_exponente == []:
+        exponente = 2 ** -126
+    else:
+        exponente_sin_sesgo = 0
+        for potencia in potencias_a_multiplicar_exponente:
+            potencia = 2 ** potencia
+            exponente_sin_sesgo += potencia
+        exponente = exponente_sin_sesgo - 127
     # obtener mantisa
     cadena_raw_mantisa = entry[9:]
-    potencias_a_multiplicar = []
+    potencias_a_multiplicar_mantisa = []
     contador_pos = 0
     for bit in cadena_raw_mantisa:
         contador_pos -= 1
         if bit == "1":
-            potencias_a_multiplicar.append(contador_pos)
+            potencias_a_multiplicar_mantisa.append(contador_pos)
     mantisa = 0
-    for potencia in potencias_a_multiplicar:
+    for potencia in potencias_a_multiplicar_mantisa:
         potencia = 2 ** potencia
         mantisa += potencia
     # calculo final
-    resultado = signo * (2 ** exponente) * (mantisa + 1)
-    return resultado
+
+    # comprobación para casos de subnormales y infinitos
+    if mantisa == 0 and exponente == 2 ** -126:
+        return 0.0 * signo
+    elif exponente == 2 ** -126:
+        return signo * mantisa * exponente
+    elif len(potencias_a_multiplicar_exponente) == 8 and len(potencias_a_multiplicar_mantisa) > 0:
+        print("CASO NaN, no es un número.")
+        return 0
+    elif len(potencias_a_multiplicar_exponente) == 8 and len(potencias_a_multiplicar_mantisa) == 0:
+        print("CASO Infinito, este numero es infinito o no cabe en representación de 32 bits")
+        return 0
+    # comprobación caso normal
+    else:
+        resultado = signo * (2 ** exponente) * (mantisa + 1)
+        return resultado
 
 
 def program():
-    global running, hex_list
+    global running
     print("---CALCULADORA IEEE-754, ESCRIBA /h PARA OBTENER LA LISTA DE COMANDOS---\n")
     while running == True:
         try:
@@ -75,13 +89,13 @@ def program():
                         floating_number += caracter
                 floating_number = float(floating_number)
                 binario = binaryconversion(floating_number)
-                print(f"RESULATADO EN FORMATO IEE-754 (Bin): {binario}\nRESULATADO EN FORMATO IEE-754 (Hex): {hex(int(binario, 2))[2:]}")
+                print(f"RESULATADO EN FORMATO IEE-754 (Bin): {binario}\nRESULATADO EN FORMATO IEE-754 (Hex): {f"{int(binario, 2):08x}"}")
             if command == "/d" or command == "/D":
                 entry = input("Introduzca un numero con representacion IEEE 754: ")
                 # caso hexadecimal
                 if len(entry) == 8:
                     for caracter in entry:
-                        if caracter not in hex_list:
+                        if caracter not in "0123456789abcdefABCDEF":
                             raise ValueError
                     entry = f"{int(entry, 16):032b}"
                 else:
@@ -91,7 +105,7 @@ def program():
                         if caracter != "1" and caracter != "0":
                             raise ValueError
                 decimal = decimalconversion(entry)
-                print(decimal)
+                print(f"RESULATADO EN FORMATO DECIMAL: {decimal}\nRESULATADO EN FORMATO HEXADECIMAL: {int(binaryconversion(decimal), 2):08x}")
             if command == "/q" or command == "/Q":
                 running = False
         except:
